@@ -1,5 +1,6 @@
 from typing import Optional
 
+import requests
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -7,9 +8,12 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
+    response = requests.get('http://172.20.10.12/')
+    print(response.text)
+
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/change-config")
+def read_item():
+    requests.post('http://172.20.10.12/', {"config1": True})
