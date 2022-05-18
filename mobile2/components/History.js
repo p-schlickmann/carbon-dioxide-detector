@@ -8,47 +8,47 @@ export default function History() {
   const [history, setHistory] = useState([
     {
       id: 1,
-      level: 988,
+      level: 40,
       time: "today",
     },
     {
       id: 2,
-      level: 1240,
+      level: 40,
       time: "today",
     },
     {
       id: 3,
-      level: 2540,
+      level: 100,
       time: "today",
     },
     {
       id: 4,
-      level: 988,
+      level: 150,
       time: "today",
     },
     {
       id: 5,
-      level: 1240,
+      level: 20,
       time: "today",
     },
     {
       id: 6,
-      level: 2540,
+      level: 700,
       time: "today",
     },
     {
       id: 7,
-      level: 988,
+      level: 395,
       time: "today",
     },
     {
       id: 8,
-      level: 1240,
+      level: 400,
       time: "today",
     },
     {
       id: 9,
-      level: 2540,
+      level: 8,
       time: "today",
     },
   ]);

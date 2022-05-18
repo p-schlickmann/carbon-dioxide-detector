@@ -6,9 +6,9 @@ import History from "./History";
 import ScrollToTopButton from "./ScrollToTopButton";
 
 export default function Home() {
-  const [monoxideLevel, setMonoxideLevel] = useState(950);
-  const [circleColor, setCircleColor] = useState("#118a7e");
-  const [backgroundColor, setBackgroundColor] = useState("#3baea0");
+  const [monoxideLevel, setMonoxideLevel] = useState(400);
+  const [circleColor, setCircleColor] = useState("#10F500");
+  const [backgroundColor, setBackgroundColor] = useState("#BFFAC1");
   const [statusMessage, setStatusMessage] = useState("Ok");
   const [pos, setPos] = React.useState(0);
   const ref = React.useRef();
@@ -18,17 +18,17 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (monoxideLevel < 1000) {
-      setCircleColor("#118a7e");
-      setBackgroundColor("#3baea0");
+    if (monoxideLevel < 80) {
+      setCircleColor("#10F500");
+      setBackgroundColor("#BFFAC1");
       setStatusMessage("Ok");
-    } else if (monoxideLevel < 2000 && monoxideLevel >= 1000) {
-      setCircleColor("#eb5033");
-      setBackgroundColor("#ff9d00");
+    } else if (monoxideLevel < 400 && monoxideLevel >= 80) {
+      setCircleColor("#F5E600");
+      setBackgroundColor("#FAEE9B");
       setStatusMessage("Alert");
     } else {
-      setCircleColor("#8a0f0f");
-      setBackgroundColor("#c22828");
+      setCircleColor("#F51701");
+      setBackgroundColor("#FAB2AC");
       setStatusMessage("Dangerous");
     }
   }, [monoxideLevel]);

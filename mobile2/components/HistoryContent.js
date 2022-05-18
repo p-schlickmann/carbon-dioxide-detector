@@ -3,17 +3,17 @@ import { StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 
 export default function HistoryContent({ level, time }) {
-  const [colorStatus, setColorStatus] = useState("#118a7e");
+  const [colorStatus, setColorStatus] = useState("#10F500");
   const [statusMessage, setStatusMessage] = useState("Ok");
   useEffect(() => {
-    if (level < 1000) {
-      setColorStatus("#118a7e");
+    if (level < 80) {
+      setColorStatus("#10F500");
       setStatusMessage("Ok");
-    } else if (level < 2000 && level >= 1000) {
-      setColorStatus("#eb5033");
+    } else if (level < 400 && level >= 80) {
+      setColorStatus("#F5E600");
       setStatusMessage("Alert");
     } else {
-      setColorStatus("#8a0f0f");
+      setColorStatus("#F51701");
       setStatusMessage("Dangerous");
     }
   }, []);
@@ -29,7 +29,7 @@ export default function HistoryContent({ level, time }) {
         </Text>
       </View>
       <View style={styles.statusMessage}>
-        <Text>{statusMessage}</Text>
+        <Text style={{ fontWeight: "bold" }}>{statusMessage}</Text>
         <View style={[styles.circle, { backgroundColor: colorStatus }]} />
       </View>
     </View>

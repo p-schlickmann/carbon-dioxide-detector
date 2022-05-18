@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(200, 200, 200, 0.8)",
     paddingVertical: 5,
     paddingHorizontal: 18,
+    borderWidth: 1,
     borderRadius: 80,
   },
   arrow: {
