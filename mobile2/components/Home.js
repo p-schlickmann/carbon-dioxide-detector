@@ -1,37 +1,44 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 import { ScrollView } from "react-native";
 import History from "./History";
 import ScrollToTopButton from "./ScrollToTopButton";
+import {api} from "../api";
+import {useMonoxide} from "../hooks";
+
+let interval
 
 export default function Home() {
-  const [monoxideLevel, setMonoxideLevel] = useState(400);
-  const [circleColor, setCircleColor] = useState("#10F500");
-  const [backgroundColor, setBackgroundColor] = useState("#BFFAC1");
-  const [statusMessage, setStatusMessage] = useState("Ok");
+  const [monoxideLevel, setMonoxideLevel] = useState(0);
+  const [status, setStatus] = useState('')
   const [pos, setPos] = React.useState(0);
   const ref = React.useRef();
+
+  const [backgroundColor, circleColor, statusMessage] = useMonoxide(status)
 
   const scrollToTop = () => {
     ref.current.scrollTo({ y: 0, animated: true });
   };
 
-  useEffect(() => {
-    if (monoxideLevel < 80) {
-      setCircleColor("#10F500");
-      setBackgroundColor("#BFFAC1");
-      setStatusMessage("Ok");
-    } else if (monoxideLevel < 400 && monoxideLevel >= 80) {
-      setCircleColor("#F5E600");
-      setBackgroundColor("#FAEE9B");
-      setStatusMessage("Alert");
-    } else {
-      setCircleColor("#F51701");
-      setBackgroundColor("#FAB2AC");
-      setStatusMessage("Dangerous");
+  const setCarbonMonoxideLevels = useCallback(async () => {
+    const response = await api.get('/').catch(e => e.response)
+    if (response.status === 200) {
+      setMonoxideLevel(response.data.monoxide_level)
+      setStatus(response.data.status)
     }
-  }, [monoxideLevel]);
+  }, [])
+
+  useEffect(() => {
+    setCarbonMonoxideLevels()
+    interval = setInterval(async () => {
+      await setCarbonMonoxideLevels()
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [setCarbonMonoxideLevels])
+
+  console.log('oi')
 
   return (
     <View>
@@ -39,13 +46,14 @@ export default function Home() {
         ref={ref}
         onScroll={(e) => setPos(e.nativeEvent.contentOffset.y)}
       >
-        <View style={[styles.container, { backgroundColor: backgroundColor }]}>
+        {status ? <View style={[styles.container, { backgroundColor: backgroundColor }]}>
           <Text style={styles.title}>Monoxide Detector</Text>
           <View style={[styles.circle, { borderColor: circleColor }]} />
           <Text style={styles.textCenter}>{monoxideLevel}</Text>
           <Text style={styles.textStatus}>{statusMessage}</Text>
           <History />
-        </View>
+        </View> : <></> }
+
       </ScrollView>
       <ScrollToTopButton scrollToTop={scrollToTop} position={pos} />
     </View>

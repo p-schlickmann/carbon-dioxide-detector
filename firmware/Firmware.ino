@@ -5,7 +5,7 @@
 #include "MQ7.h"
 
 #ifndef STASSID
-#define STASSID "iPhone do pepa"
+#define STASSID "iPhone de Pedro"
 #define STAPSK  "pedro2022"
 #endif
 
@@ -59,5 +59,9 @@ void setup(void) {
 
 void loop(void) {
   server.handleClient();
+  delay(1000);
+  float ppm = mq.getPPM();
+  Serial.print("ppm CO: ");
+  Serial.println(ppm);
   MDNS.update();
 }
