@@ -1,1 +1,1 @@
-# carbon-dioxide-detector
+# carbon-monoxide-detector
